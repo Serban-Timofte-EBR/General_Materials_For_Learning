@@ -161,3 +161,80 @@ src/prisma/prisma.service.ts
 src/prisma/prisma.module.ts
 ```
 
+Next, open the prisma.service.ts file and replace the contents with the following:
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+
+@Injectable()
+export class PrismaService extends PrismaClient {}
+```
+
+Next, open the prisma.module.ts file and replace the contents with the following:
+
+```typescript
+import { Module } from '@nestjs/common';
+import { PrismaService } from './prisma.service';
+
+@Module({
+    providers: [PrismaService],
+    exports: [PrismaService]
+})
+export class PrismaModule {}
+```
+
+## How to Set Up Swagger
+
+To install Swagger, execute the following command:
+
+```bash
+npm install --save @nestjs/swagger swagger-ui-express
+```
+Next, navigate to the main.ts file and append the following code (already in main.ts)
+
+## How to Implement CRUD Operations for the Recipe Model
+
+To generate the REST resources for the Recipe model, execute the following command:
+    
+    HERE IS THE MAGIC COMMAND
+
+```bash
+npx nest generate resource recipe
+```
+
+## How to Add PrismaClient to the Recipe Module
+
+In recipe.module.ts:
+
+```typescript
+import { Module } from '@nestjs/common';
+import { RecipeService } from './recipe.service';
+import { RecipeController } from './recipe.controller';
+import { PrismaModule } from '../prisma/prisma.module';
+
+@Module({
+  imports: [PrismaModule],
+  controllers: [RecipeController],
+  providers: [RecipeService]
+})
+export class RecipeModule {}
+```
+
+Next, open the recipe.service.ts file and add the following code:
+
+```typescript
+import { Body, Injectable, Post } from '@nestjs/common';
+import { CreateRecipeDto } from './dto/create--recipe.dto';
+import { UpdateRecipeDto } from './dto/update--recipe.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+
+@Injectable()
+export class RecipesService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  //  rest of the code
+}
+```
+
+Now define in receipe.service.ts the functions and DTOs
