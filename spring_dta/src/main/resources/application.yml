@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: spring_dta
+    version: 2
+
+server:
+  servlet:
+    context-path: /mpai-spring-mvc
