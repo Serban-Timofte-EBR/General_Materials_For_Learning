@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MPAI Spring MVC Demo</title>
+</head>
+<body>
+<p>This is MPAI Spring MVC Demo <b>Courses</b> page</p>
+
+<table>
+    <thead>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Trainer
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Students
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+         <button><i>Edit</i></button>
+        </td>
+        <td>
+            <button><i>Remove</i></button>
+        </td>
+        <td>
+            <form th:action="@{/courses/1/students/enroll}" method="get">
+                <button type="submit"><i>Enroll student</i></button>
+            </form>
+
+        </td>
+        <td>Demo Id 1</td>
+        <td>Demo Name 1</td>
+        <td>Demo Trainer 1</td>
+        <td>Demo Description 1</td>
+        <td>
+            <ul>
+                <li style="display:flex; align-items: center; margin-bottom: 10px;">Student demo name 1
+                <button style="margin: 10px">X</button>
+                </li>
+                <li style="display:flex; align-items: center; margin-bottom: 10px;">Student demo name 2
+                    <button style="margin: 10px">X</button>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/courses/add}"><i>Add a new course</i></a>
+</body>
+</html>
