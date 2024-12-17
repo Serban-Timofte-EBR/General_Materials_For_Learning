@@ -60,9 +60,8 @@
                         th:each = "student : ${course.students}"
                         style="display:flex; align-items: center; margin-bottom: 10px;">Student demo name 1
                     <span th:text = "${student.name}">Student demo name 1</span>
-                    <form>
+                    <form th:action = "@{'/courses/' + ${course.getId()} + '/students/' + ${student.id} + '/unenroll'}" method="post">
                         <button type="submit"
-                                th:action = "@{'/courses/' + ${course.getId()} + '/students/' + ${student.id} + '/unenroll'}"
                                 style="margin: 10px">X</button>
                     </form>
 

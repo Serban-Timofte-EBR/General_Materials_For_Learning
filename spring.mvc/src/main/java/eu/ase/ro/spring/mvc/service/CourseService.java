@@ -98,4 +98,21 @@ public class CourseService {
         course.setDescription(request.getDescription());
         courseRepository.save(course);
     }
+
+    public void removeById(Integer courseId) {
+        courseRepository.deleteById(courseId);
+    }
+
+    public void unenrollStudent(Integer courseId, Integer studentId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        List<Student> students = course.getStudents()
+                .stream()
+                .filter(student -> student.getId() != studentId)
+                .collect(Collectors.toList());
+
+        course.setStudents(students);
+        courseRepository.save(course);
+    }
 }

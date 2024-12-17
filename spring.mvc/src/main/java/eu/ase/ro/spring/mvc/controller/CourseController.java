@@ -61,4 +61,16 @@ public class CourseController {
         model.addAttribute("course", course);
         return "courses/add";
     }
+
+    @PostMapping("/courses/{courseId}/remove")
+    public String remove(@PathVariable Integer courseId) {
+        courseService.removeById(courseId);
+        return "redirect:/home";
+    }
+
+    @PostMapping("courses/{courseId}/students/{studentId}/unenroll")
+    public String removeStudent(@PathVariable Integer courseId, @PathVariable Integer studentId) {
+        courseService.unenrollStudent(courseId, studentId);
+        return "redirect:/home";
+    }
 }
