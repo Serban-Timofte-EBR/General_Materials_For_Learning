@@ -47,7 +47,11 @@ public class CourseController {
     @PostMapping("/courses")
     public String save(@ModelAttribute CourseRequest request,
                        @RequestParam(required = false) Integer courseId) {
+        if (courseId == null) {
         courseService.save(request);
+        } else {
+            courseService.updateById(courseId, request);
+        }
         return "redirect:/home";
     }
 

@@ -88,4 +88,14 @@ public class CourseService {
                 .map(this::toCourseResponse)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
     }
+
+    public void updateById(Integer courseId, CourseRequest request) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        course.setName(request.getName());
+        course.setTrainer(request.getTrainer());
+        course.setDescription(request.getDescription());
+        courseRepository.save(course);
+    }
 }
