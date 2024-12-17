@@ -31,30 +31,41 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
+    <tr th:each = "course : ${courses}">
         <td>
-         <button><i>Edit</i></button>
+            <form th:action = "@{'/courses/'+${course.getId()}+'/edit'}" method="get">
+                <button><i>Edit</i></button>
+            </form>
+
         </td>
         <td>
-            <button><i>Remove</i></button>
+            <form th:action = "@{'/courses/' + ${course.getId()} +'/remove'}" method="post">
+                <button type="submit"><i>Remove</i></button>
+            </form>
+
         </td>
         <td>
-            <form th:action="@{/courses/1/students/enroll}" method="get">
+            <form th:action = "@{'/courses/' + ${course.getId()} +'/enroll'}" method="get">
                 <button type="submit"><i>Enroll student</i></button>
             </form>
 
         </td>
-        <td>Demo Id 1</td>
-        <td>Demo Name 1</td>
-        <td>Demo Trainer 1</td>
-        <td>Demo Description 1</td>
+        <td th:text = "${course.getId()}">Demo Id 1</td>
+        <td th:text = "${course.getName()}">Demo Name 1</td>
+        <td th:text = "${course.getTrainer()}">Demo Trainer 1</td>
+        <td th:text = "${course.getDescription()}">Demo Description 1</td>
         <td>
             <ul>
-                <li style="display:flex; align-items: center; margin-bottom: 10px;">Student demo name 1
-                <button style="margin: 10px">X</button>
-                </li>
-                <li style="display:flex; align-items: center; margin-bottom: 10px;">Student demo name 2
-                    <button style="margin: 10px">X</button>
+                <li
+                        th:each = "student : ${course.students}"
+                        style="display:flex; align-items: center; margin-bottom: 10px;">Student demo name 1
+                    <span th:text = "${student.name}">Student demo name 1</span>
+                    <form>
+                        <button type="submit"
+                                th:action = "@{'/courses/' + ${course.getId()} + '/students/' + ${student.id} + '/unenroll'}"
+                                style="margin: 10px">X</button>
+                    </form>
+
                 </li>
             </ul>
         </td>

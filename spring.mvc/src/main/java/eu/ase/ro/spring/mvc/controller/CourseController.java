@@ -1,15 +1,29 @@
 package eu.ase.ro.spring.mvc.controller;
 
+import eu.ase.ro.spring.mvc.reponse.CourseResponse;
+import eu.ase.ro.spring.mvc.request.CourseRequest;
+import eu.ase.ro.spring.mvc.service.CourseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class CourseController {
+    public static final String COURSES = "courses";
+    private final CourseService courseService;
+
+    @Autowired
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
 
     @GetMapping("/courses")
-    public String coursePage() {
+    public String coursePage(Model model) {
+        List<CourseResponse> courses = courseService.getAll();
+        model.addAttribute(COURSES, courses);
         return "courses/index";
     }
 
@@ -27,6 +41,20 @@ public class CourseController {
 
     @GetMapping("/courses/add")
     public String navigateToAddPage() {
+        return "courses/add";
+    }
+
+    @PostMapping("/courses")
+    public String save(@ModelAttribute CourseRequest request,
+                       @RequestParam(required = false) Integer courseId) {
+        courseService.save(request);
+        return "redirect:/home";
+    }
+
+    @GetMapping("/courses/{courseId}/edit")
+    public String navigateToEditPage(@PathVariable Integer courseId, Model model) {
+        CourseResponse course = courseService.findById(courseId);
+        model.addAttribute("course", course);
         return "courses/add";
     }
 }
